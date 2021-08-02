@@ -1,0 +1,178 @@
+<html>
+   <head>
+      <meta charset="UTF-8">
+      <title>Template for Practicing Javascript</title>
+   </head>
+   <body>
+      <table style="text-align: center; width: 100%;">
+         <tr>
+            <th>Zodiac Sign</th>
+            <th>Zodiac Ruler</th>
+            <th>Zodiac Symbol</th>
+         </tr>
+         <tr id='data' style="text-align: center; width: 100%;">
+         </tr>
+      </table>
+   </body>
+   <script> 
+/*
+یہ وہ کوڈ ہے جو سانچے کے ساتھ آیا ہے ، اس کی ضرورت ہے۔
+This is the code that came with the template, its required
+*/
+      // -------------  Constants ----------------
+      
+      	const SECONDS_PER_YEAR = 31557600;
+      	const SECONDS_PER_DAY = 60 * 60 * 24;
+      	const MILLISECONDS_PER_SECOND = 1000;
+      
+      	const PROMPT_DAY_OF_BIRTH = "Enter day of birth";
+      	const PROMPT_MONTH_OF_BIRTH = "Enter month of birth";
+      	const PROMPT_YEAR_OF_BIRTH = "Enter year of birth";
+      
+      	const MONTH_NAME = 
+      	[	"January"
+      	,	"February"
+      	,	"March"
+      	,	"April"
+      	,	"May"
+      	,	"June"
+      	,	"July"
+      	,	"August"
+      	,	"September"
+      	,	"October"
+      	,	"November"
+      	,	"December"
+      	];
+      
+      	const SHORT_MONTH_NAME = 
+      	[	"jan"
+      	,	"feb"
+      	,	"mar"
+      	,	"apr"
+      	,	"may"
+      	,	"jun"
+      	,	"jul"
+      	,	"aug"
+      	,	"sep"
+      	,	"oct"
+      	,	"nov"
+      	,	"dec"
+      	];
+      	const months = {
+      	'jan' : '01',
+      	'feb' : '02',
+      	'mar' : '03',
+      	'apr' : '04',
+      	'may' : '05',
+      	'jun' : '06',
+      	'jul' : '07',
+      	'aug' : '08',
+      	'sep' : '09',
+      	'oct' : '10',
+      	'nov' : '11',
+      	'dec' : '12'
+      }
+      
+      	const ZODIAC_DAY_MONTH =
+      	[	[ 9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,10,10,10,10,10,10,10,10,10,10,10,10]
+      	,   [ 10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,11,11,11,11,11,11,11,11,11,11,11]
+      	,	[ 11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,0,0,0,0,0,0,0,0,0,0,0]
+      	,	[ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1]
+      	,	[ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2]
+      	,	[ 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3]
+      	,	[ 3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4]
+      	,	[ 4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5]
+      	,	[ 5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6,6,6,6,6,6,6,6]
+      	,	[ 6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,7,7,7,7,7,7,7,7]
+      	,	[ 7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,8,8,8,8,8,8,8,8]
+      	,	[ 8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,9,9,9,9,9,9,9,9,9,9]
+      	];
+      
+      	const ZODIAC_NAME =
+      	[ "Aries"
+      	, "Taurus"
+      	, "Gemini"
+      	, "Cancer"
+      	, "Leo"
+      	, "Virgo"
+      	, "Libra"
+      	, "Scorpio"
+      	, "Sagittarius"
+      	, "Capricorn"
+      	, "Aquarius"
+      	, "Pisces"
+      	];
+      	
+      	const ZODIAC_RULER =
+      	[ "Mars"
+      	, "Venus and Ceres"
+      	, "Mercury"
+      	, "The Moon"
+      	, "The Sun"
+      	, "Chiron and Mercury"
+      	, "Venus"
+      	, "Pluto and Mars"
+      	, "Jupiter"
+      	, "Saturn"
+      	, "Uranus and Saturn"
+      	, "Neptune and Jupiter"
+      	];
+      	
+      	const ZODIAC_IMG = 
+      	[	"https://tau.usq.edu.au/staff/braithwaite/Courses/CSC1401/Zodiac/aries.png"
+      	,	"https://tau.usq.edu.au/staff/braithwaite/Courses/CSC1401/Zodiac/taurus.png"
+      	,	"https://tau.usq.edu.au/staff/braithwaite/Courses/CSC1401/Zodiac/gemini.png"
+      	,	"https://tau.usq.edu.au/staff/braithwaite/Courses/CSC1401/Zodiac/cancer.png"
+      	,	"https://tau.usq.edu.au/staff/braithwaite/Courses/CSC1401/Zodiac/leo.png"
+      	,	"https://tau.usq.edu.au/staff/braithwaite/Courses/CSC1401/Zodiac/virgo.png"
+      	,	"https://tau.usq.edu.au/staff/braithwaite/Courses/CSC1401/Zodiac/libra.png"
+      	,	"https://tau.usq.edu.au/staff/braithwaite/Courses/CSC1401/Zodiac/scorpio.png"
+      	,	"https://tau.usq.edu.au/staff/braithwaite/Courses/CSC1401/Zodiac/sagittarius.png"
+      	,	"https://tau.usq.edu.au/staff/braithwaite/Courses/CSC1401/Zodiac/capricorn.png"
+      	,	"https://tau.usq.edu.au/staff/braithwaite/Courses/CSC1401/Zodiac/aquarius.png"
+      	,	"https://tau.usq.edu.au/staff/braithwaite/Courses/CSC1401/Zodiac/pisces.png"
+      	];
+      
+	  // -----------  Input -------------
+/*
+یہ ان پٹ کوڈ ہے ، یہ صارف سے ان کی تفصیلات جیسے دن ، مہینہ اور سال پیدائش کے بارے میں پوچھنے کے لیے فوری فنکشن کا استعمال کرتا ہے
+This is the input code, it uses the prompt function to ask the user for their details such as day, month and year of birth
+*/
+      	var dayOfBirth = prompt(PROMPT_DAY_OF_BIRTH)
+		/*
+		ماہ کا نمبر حاصل کرنے کے لیے مہینے کی صف کو انڈیکس کرنے کے لیے پہلے 3 حروف میں کاٹنا ضروری ہے۔
+		The month required to be cut into the first 3 letters to index the month array to get the number of the month
+		*/
+      	var MonthOfBirthStr = prompt(PROMPT_MONTH_OF_BIRTH).toString().slice(0, 3)
+      	var yearOfBirth = prompt(PROMPT_YEAR_OF_BIRTH)
+
+      // -----------  Calculations -------------
+	  	/*
+		  یہ کوڈ مناسب حساب کرتا ہے جو صفوں کو انڈیکس کرنے اور آؤٹ پٹ تیار کرنے کے لیے درکار ہوتا ہے۔
+		  This code does the appropriate calculations that are required to index the arrays and produce the output
+		  */
+      	const monthOfBirth = months[MonthOfBirthStr]
+      	let DOB = new Date(`${yearOfBirth}-${monthOfBirth}-${dayOfBirth}`).valueOf()
+      	const CurrentDate = new Date().valueOf()
+      	var NumberOfMilliseconds = ( CurrentDate - DOB )/1000
+      	var NumberOfSecondsPerYear = 31540000
+      	var NumberOfYearsAlive= Math.floor((NumberOfMilliseconds / NumberOfSecondsPerYear));
+
+      // -----------  Calculations -------------
+	  /*
+	  یہ کوڈ ان اقدار کو تیار اور تیار کرتا ہے جو آؤٹ پٹ ہونے جا رہے ہیں۔
+	  This code creates and ready the values which are going to be outputted
+	  */
+      var zodiacSign  = ZODIAC_DAY_MONTH[parseInt(monthOfBirth)][parseInt(dayOfBirth)]
+      var zodiacName  = ZODIAC_NAME[zodiacSign] 
+      var zodiacRuler = ZODIAC_RULER[zodiacSign]
+      let zodiacImage = ZODIAC_IMG[zodiacSign-1]
+      // -----------  Output -------------
+	  /*
+	  یہ وہ کوڈ ہے جو صارف کی رقم اور علامات کو آؤٹ پٹ کرتا ہے۔ یہ جاوا اسکرپٹ کے ذریعہ تیار کردہ معلومات کو شامل کرنے کے لئے DOM کا استعمال کرتا ہے۔
+	  This is the code which outputs the user's zodiac signs and symbols. It uses DOM to append the information produced by javascript
+	  */
+      let data = document.getElementById('data').innerHTML += `<td>${zodiacName}</td> <td>${zodiacRuler}</td> <img style="padding-left:20px;" src='${zodiacImage}'></img>`
+
+   </script> 
+</html>
